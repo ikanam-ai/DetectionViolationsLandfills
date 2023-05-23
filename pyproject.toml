@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "digitalhack"
+name = "lct"
 version = "0.1.0"
 description = ""
 authors = ["Rinat Sharafetdinov <rinat.sharafetdinov42@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.8.10"
+python = ">=3.8.10,<3.9.7 || >3.9.7,<4.0.0"
 numpy = "^1.24.3"
 pandas = "^2.0.1"
 torch = "^2.0.1"
@@ -22,6 +22,11 @@ scikit-learn = "^1.2.2"
 folium = "^0.14.0"
 openpyxl = "^3.1.2"
 suntime = "^1.2.5"
+ipykernel = "^6.23.1"
+streamlit = "^1.22.0"
+opencv-python = "^4.7.0.72"
+wget = "^3.2"
+selenium = "^4.9.1"
 
 
 [tool.poetry.group.dev.dependencies]
