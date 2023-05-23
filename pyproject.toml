@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "digitalhack"
+version = "0.1.0"
+description = ""
+authors = ["Rinat Sharafetdinov <rinat.sharafetdinov42@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8.10"
+numpy = "^1.24.3"
+pandas = "^2.0.1"
+torch = "^2.0.1"
+transformers = "^4.29.2"
+psycopg2 = "^2.9.6"
+config = "^0.5.1"
+flask = "^2.3.2"
+flask-restful = "^0.3.9"
+fastapi = "^0.95.2"
+spacy = "^3.5.3"
+sqlalchemy = "^2.0.15"
+scikit-learn = "^1.2.2"
+folium = "^0.14.0"
+openpyxl = "^3.1.2"
+suntime = "^1.2.5"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.23.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
