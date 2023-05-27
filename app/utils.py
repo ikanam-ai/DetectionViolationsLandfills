@@ -14,9 +14,12 @@ def get_subdirs(b='.'):
 
 def get_detection_folder():
     '''
-        Returns the latest folder in a runs\detect
+        Returns the latest folder in runs/detect
     '''
-    return max(get_subdirs(os.path.join('')), key=os.path.getmtime)
+    detection_folder = os.path.join(st.config.get_option("server.baseUrl"), "runs", "detect")
+    subdirs = [d for d in os.listdir(detection_folder) if os.path.isdir(os.path.join(detection_folder, d))]
+    latest_folder = max(subdirs, key=lambda x: os.path.getmtime(os.path.join(detection_folder, x)))
+    return os.path.join(detection_folder, latest_folder)
 
 def check_folders():
     paths = {
