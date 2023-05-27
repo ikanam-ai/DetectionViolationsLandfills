@@ -31,8 +31,8 @@ if __name__ == '__main__':
             with st.spinner(text='Loading...'):
                 st.sidebar.image(uploaded_file)
                 picture = Image.open(uploaded_file)
-                picture = picture.save(f'data/images/{uploaded_file.name}')
-                source = f'data/images/{uploaded_file.name}'
+                # picture = picture.save(f'data/images/{uploaded_file.name}')
+                # source = f'data/images/{uploaded_file.name}'
         else:
             is_valid = False
     else:
@@ -54,15 +54,15 @@ if __name__ == '__main__':
                 print(subprocess.run(['yolo', 'task=detect', 'mode=predict', 'model=best.pt', 'conf=0.25', 'source={}'.format(source)],capture_output=True, universal_newlines=True).stderr)
 
                     
-            if source_index == 0:
-                with st.spinner(text='Preparing Images'):
-                    for img in os.listdir(get_detection_folder()):
-                        st.image(str(Path(f'{get_detection_folder()}') / img))
+            # if source_index == 0:
+            #     with st.spinner(text='Preparing Images'):
+            #         for img in os.listdir(get_detection_folder()):
+            #             st.image(str(Path(f'{get_detection_folder()}') / img))
 
-                    st.balloons()
-            else:
-                with st.spinner(text='Preparing Video'):
-                    for vid in os.listdir(get_detection_folder()):
-                        st.video(str(Path(f'{get_detection_folder()}') / vid))
+        st.balloons()
+            # else:
+            #     with st.spinner(text='Preparing Video'):
+            #         for vid in os.listdir(get_detection_folder()):
+            #             st.video(str(Path(f'{get_detection_folder()}') / vid))
 
-                    st.balloons()
+            #         st.balloons()
