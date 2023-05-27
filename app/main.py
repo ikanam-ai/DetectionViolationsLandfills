@@ -55,9 +55,11 @@ if __name__ == '__main__':
 
                     
             if source_index == 0:
-                with st.spinner(text='Preparing Images'):
-                    for img in os.listdir(get_detection_folder()):
-                        st.image(str(Path(f'{get_detection_folder()}') / img))
+                detection_folder = get_detection_folder()
+                if detection_folder is not None:
+                    with st.spinner(text='Preparing Images'):
+                        for img in os.listdir(detection_folder):
+                            st.image(str(Path(detection_folder) / img))
 
             # else:
             #     with st.spinner(text='Preparing Video'):
