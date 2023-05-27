@@ -1,6 +1,15 @@
 import os
 import streamlit as st
 
+
+st.set_config(
+    **{
+        "server": {
+            "baseUrl": "/tothelimbo-lct-2023-appmain-15s7vm"
+        }
+    }
+)
+
 def get_subdirs(b='.'):
     '''
         Returns all sub-directories in a specific Path
