@@ -14,13 +14,13 @@ transform = transforms.Compose([
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
 
-# Function to perform object detection
 def detect_objects(image):
     image = transform(image).unsqueeze(0)
     with torch.no_grad():
         output = model(image)
     # Process the output and return the detected objects
     # ...
+    return output
 
 # Streamlit app code
 def main():
@@ -33,10 +33,14 @@ def main():
         st.write("")
         st.write("Detecting objects...")
         # Call the object detection function
-        # ...
+        output = detect_objects(image)
         st.write("Objects detected:")
         # Display the detected objects
-        # ...
+        if output is not None:
+            for obj in output:
+                st.write(f"- {obj}")
+        else:
+            st.write("No objects detected.")
 
 if __name__ == "__main__":
     main()
