@@ -1,5 +1,5 @@
 # Adapted to use with Yolov8
-from utils import get_detection_folder, check_folders
+# from utils import get_detection_folder, check_folders
 import redirect as rd
 
 from pathlib import Path
@@ -31,8 +31,8 @@ if __name__ == '__main__':
             with st.spinner(text='Loading...'):
                 st.sidebar.image(uploaded_file)
                 picture = Image.open(uploaded_file)
-                # picture = picture.save(f'data/images/{uploaded_file.name}')
-                # source = f'data/images/{uploaded_file.name}'
+                picture = picture.save(f'data/images/{uploaded_file.name}')
+                source = f'data/images/{uploaded_file.name}'
         else:
             is_valid = False
     else:
@@ -59,7 +59,6 @@ if __name__ == '__main__':
             #         for img in os.listdir(get_detection_folder()):
             #             st.image(str(Path(f'{get_detection_folder()}') / img))
 
-        st.balloons()
             # else:
             #     with st.spinner(text='Preparing Video'):
             #         for vid in os.listdir(get_detection_folder()):
