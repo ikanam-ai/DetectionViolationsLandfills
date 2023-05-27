@@ -9,6 +9,19 @@ import streamlit as st
 import numpy as np
 from PIL import Image
 
+import database as db 
+import streamlit_authenticator as stauth
+
+users = db.fetch_all_users()
+
+usernames = [user['key'] for user in users]
+names = [user['name'] for user in users]
+hashed_passwords = [user['password'] for user in users]
+
+authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
+    "main", "abcdef")
+
+name, authentication_status, username = authenticator.login('Login', 'main')
 
 def brighten_image(image, amount):
     img_bright = cv2.convertScaleAbs(image, beta=amount)
