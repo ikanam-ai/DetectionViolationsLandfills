@@ -1,8 +1,5 @@
 import os
 
-import streamlit as st
-
-
 def get_subdirs(b='.'):
     '''
         Returns all sub-directories in a specific Path
@@ -15,15 +12,11 @@ def get_subdirs(b='.'):
     return result
 
 
-
 def get_detection_folder():
     '''
-        Returns the latest folder in the "runs/detect" directory
+        Returns the latest folder in a runs\detect
     '''
-    detection_folder = os.path.join(st.config.get_option("https://tothelimbo-lct-2023-appmain-15s7vm.streamlit.app/"), "runs", "detect")
-    subdirs = [d for d in os.listdir(detection_folder) if os.path.isdir(os.path.join(detection_folder, d))]
-    latest_folder = max(subdirs, key=lambda x: os.path.getmtime(os.path.join(detection_folder, x)))
-    return os.path.join(detection_folder, latest_folder)
+    return max(get_subdirs(os.path.join('runs', 'detect')), key=os.path.getmtime)
 
 def check_folders():
     paths = {
