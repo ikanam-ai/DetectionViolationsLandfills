@@ -54,10 +54,10 @@ if __name__ == '__main__':
                 print(subprocess.run(['yolo', 'task=detect', 'mode=predict', 'model=best.pt', 'conf=0.25', 'source={}'.format(source)],capture_output=True, universal_newlines=True).stderr)
 
                     
-            # if source_index == 0:
-            #     with st.spinner(text='Preparing Images'):
-            #         for img in os.listdir(get_detection_folder()):
-            #             st.image(str(Path(f'{get_detection_folder()}') / img))
+            if source_index == 0:
+                with st.spinner(text='Preparing Images'):
+                    for img in os.listdir(get_detection_folder()):
+                        st.image(str(Path(f'{get_detection_folder()}') / img))
 
             # else:
             #     with st.spinner(text='Preparing Video'):
