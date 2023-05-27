@@ -1,5 +1,5 @@
 # Adapted to use with Yolov8
-# from utils import get_detection_folder, check_folders
+from utils import get_detection_folder, check_folders
 import redirect as rd
 
 from pathlib import Path
