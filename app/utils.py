@@ -16,10 +16,7 @@ def get_detection_folder():
     '''
         Returns the latest folder in a runs\detect
     '''
-    detect_folder = os.path.join('runs', 'detect')
-    if os.path.exists(detect_folder):
-        return max(get_subdirs(detect_folder), key=os.path.getmtime)
-    return None
+    return max(get_subdirs(os.path.join('runs', 'detect')), key=os.path.getmtime)
 
 def check_folders():
     paths = {
