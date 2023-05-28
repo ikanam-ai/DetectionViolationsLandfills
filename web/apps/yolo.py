@@ -76,7 +76,7 @@ def app():
     if is_valid:
         if st.button('Сделать предсказание'):
             with st.spinner('Подождите...'):
-                process = subprocess.run(['yolo', 'task=detect', 'mode=predict', 'model=models/model.pt', 'conf=0.08', 'source={}'.format(source)], capture_output=True, universal_newlines=True)
+                process = subprocess.run(['yolo', 'task=detect', 'mode=predict', 'model=models/best.pt', 'conf=0.15', 'source={}'.format(source)], capture_output=True, universal_newlines=True)
                 output = process.stderr
                 st.text(output)
 
