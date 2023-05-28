@@ -1,3 +1,4 @@
+# App for cropping images
 import streamlit as st
 from PIL import Image
 from itertools import product

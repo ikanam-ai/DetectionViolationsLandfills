@@ -1,3 +1,4 @@
+# App for creating folders and get paths
 import os
 
 def get_subdirs(b='.'):
@@ -29,11 +30,9 @@ def check_folders():
     notExist = list(({file_type: path for (file_type, path) in paths.items() if not os.path.exists(path)}).values())
     
     if notExist:
-        print(f'Folder {notExist} does not exist. We will created')
+        print(f'Директория {notExist} не существует, мы сделаем!')
         # Create a new directory because it does not exist
         for folder in notExist:
             os.makedirs(folder)
-            print(f"The new directory {folder} is created!")
-  
-        
+            print(f"Новая директория {folder} создана!")
         

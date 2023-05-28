@@ -1,3 +1,4 @@
+# App for login and registration 
 import streamlit as st
 from deta import Deta
 import time
