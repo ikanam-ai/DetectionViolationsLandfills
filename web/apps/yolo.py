@@ -78,10 +78,8 @@ def app():
             with st.spinner('Подождите...'):
                 process = subprocess.run(['yolo', 'task=detect', 'mode=predict', 'model=models/best.pt', 'conf=0.15', 'source={}'.format(source)], capture_output=True, universal_newlines=True)
                 output = process.stderr
-                st.text(output)
 
                 russian_labels = re.findall(r'\d+ ([а-яА-ЯёЁ\s]+)', output)
-                st.write(russian_labels)
                 # Create dataframe with labels column
                 df = pd.DataFrame(full_labels, columns=['Объекты'])
 
