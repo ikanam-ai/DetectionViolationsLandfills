@@ -6,47 +6,48 @@ deta = Deta('c0dahqob3d5_3pz1eEuAyAQwE4P1waUJwr4cr2anHzp8')
 users_db = deta.Base('users')
 
 def register():
-    st.title('Registration')
+    st.title('Регистрация')
 
-    name = st.text_input('Name')
-    email = st.text_input('Email')
-    password = st.text_input('Password', type='password')
+    name = st.text_input('Имя')
+    email = st.text_input('Электронная почта')
+    password = st.text_input('Пароль', type='password')
 
-    if st.button('Register'):
+    if st.button('Зарегистрироваться'):
         # Check if the user already exists
         existing_user = users_db.get(email)
 
         if existing_user is not None:
-            st.error('User with the given email already exists')
+            st.error('Пользователь с таким адресом электронной почты уже существует')
         else:
             # Add the user to the database
             users_db.put({'name': name, 'email': email, 'password': password}, email)
-            st.success('Registration successful!')
+            st.success('Вы успешно зарегстрировались!')
 
 # Login page
 def login():
-    st.title('Login')
+    st.title('Вход')
 
-    email = st.text_input('Email')
-    password = st.text_input('Password', type='password')
+    email = st.text_input('Электронная почта')
+    password = st.text_input('Пароль', type='password')
 
-    if st.button('Login'):
+    if st.button('Вход'):
         # Retrieve the user from the database
         user = users_db.get(email)
         if user is not None and user['password'] == password:
-            st.success('Logged in successfully!')
+            st.success('Вход успешен!')
             # Generate HTML code for redirecting to a new page
         else:
-            st.error('Invalid credentials')
+            st.error('Неправильные данные')
 
 # Main function
 def main():
-    st.sidebar.title('Navigation')
-    page = st.sidebar.selectbox('Select a page', ['Login', 'Register'])
 
-    if page == 'Login':
+    st.sidebar.title('Навигация')
+    page = st.sidebar.selectbox('Выбрать страницу', ['Вход', 'Регистрация'])
+
+    if page == 'Вход':
         login()
-    elif page == 'Register':
+    elif page == 'Регистрация':
         register()
 
 def app():
