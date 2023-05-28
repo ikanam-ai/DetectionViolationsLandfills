@@ -49,7 +49,7 @@ def app():
         print('valid')
         if st.button('Сделать предсказание'):
             with rd.stderr(format='markdown', to=st.sidebar), st.spinner('Wait for it...'):
-                print(subprocess.run(['yolo', 'task=detect', 'mode=predict', 'model=models/model.pt', 'conf=0.08', 'source={}'.format(source)],capture_output=True, universal_newlines=True).stderr)
+                print(subprocess.run(['yolo', 'task=detect', 'mode=predict', 'model=models/best_model.pt', 'conf=0.08', 'source={}'.format(source)],capture_output=True, universal_newlines=True).stderr)
 
                     
             if source_index == 0:
