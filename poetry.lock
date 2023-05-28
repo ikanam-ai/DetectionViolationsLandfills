@@ -267,14 +267,14 @@ jinja2 = "*"
 
 [[package]]
 name = "cachetools"
-version = "5.3.0"
+version = "5.3.1"
 description = "Extensible memoizing collections and decorators"
 category = "main"
 optional = false
-python-versions = "~=3.7"
+python-versions = ">=3.7"
 files = [
-    {file = "cachetools-5.3.0-py3-none-any.whl", hash = "sha256:429e1a1e845c008ea6c85aa35d4b98b65d6a9763eeef3e37e92728a12d1de9d4"},
-    {file = "cachetools-5.3.0.tar.gz", hash = "sha256:13dfddc7b8df938c21a940dfa6557ce6e94a2f1cdfa58eb90c805721d58f2c14"},
+    {file = "cachetools-5.3.1-py3-none-any.whl", hash = "sha256:95ef631eeaea14ba2e36f06437f36463aac3a096799e876ee55e5cdccb102590"},
+    {file = "cachetools-5.3.1.tar.gz", hash = "sha256:dce83f2d9b4e1f732a8cd44af8e8fab2dbe46201467fc98b3ef8f269092bf62b"},
 ]
 
 [[package]]
@@ -2427,6 +2427,20 @@ files = [
 ]
 
 [[package]]
+name = "pyngrok"
+version = "6.0.0"
+description = "A Python wrapper for ngrok."
+category = "main"
+optional = false
+python-versions = ">=3.5"
+files = [
+    {file = "pyngrok-6.0.0.tar.gz", hash = "sha256:dd8a87944b8e28572e3d126bfb2c81a2948594575f5237eefd3651ae0b487155"},
+]
+
+[package.dependencies]
+PyYAML = "*"
+
+[[package]]
 name = "pyopenssl"
 version = "23.1.1"
 description = "Python wrapper module around the OpenSSL library"
@@ -3421,6 +3435,23 @@ PyYAML = ">=5.3.1"
 streamlit = ">=0.86"
 
 [[package]]
+name = "streamlit-drawable-canvas"
+version = "0.9.2"
+description = "A Streamlit custom component for a free drawing canvas using Fabric.js."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "streamlit-drawable-canvas-0.9.2.tar.gz", hash = "sha256:6cdec8c405b829588c1ea46f18249b668cddcd5597cfa6802690a37921b163b0"},
+    {file = "streamlit_drawable_canvas-0.9.2-py3-none-any.whl", hash = "sha256:40dde80f4c437727a4d30c587510ad215fd93525c3ba5da09b2267546fecfb8f"},
+]
+
+[package.dependencies]
+numpy = "*"
+Pillow = "*"
+streamlit = ">=0.63"
+
+[[package]]
 name = "suntime"
 version = "1.2.5"
 description = "Simple sunset and sunrise time calculation python library"
@@ -4129,4 +4160,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.10,<3.9.7 || >3.9.7,<4.0.0"
-content-hash = "446a5f2c181649ae2b7f7b657784bab9299019d2199cdd627134ce13be1f904e"
+content-hash = "c7133d4f2fb7f0ce1520cbcbbf2ea60a92bd74e9ee38065056a469fc7daa3c3f"
