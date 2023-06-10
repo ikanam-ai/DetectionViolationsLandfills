@@ -14,7 +14,7 @@ app.add_app("Войти & Регистрация", login.app)
 
 app.add_app("Детекция объектов", yolo.app)
 
-app.add_app("Новая детекция", predict.app)
+# app.add_app("Новая детекция", predict.app)
 
 app.add_app('Обрезка панорамной фотографии', crop.app)
 

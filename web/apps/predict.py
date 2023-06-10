@@ -3,6 +3,7 @@ import cv2
 import random
 import numpy as np
 import streamlit as st
+from PIL import Image
 
 full_labels = ['Веса автомобилей',
                'Лужи и грязь на дороге',
@@ -90,11 +91,14 @@ def app():
 
     if uploaded_file is not None:
         # Display uploaded image
+        picture = Image.open(uploaded_file)
+        picture.save(f'data/images/{uploaded_file.name}')
+        source = f'data/images/{uploaded_file.name}'
         image = cv2.imdecode(np.frombuffer(uploaded_file.read(), np.uint8), 1)
         st.image(image, channels="BGR")
 
         # Apply object detection
-        file_path, mask_file_path = get_predict(uploaded_file.name)
+        file_path, mask_file_path = get_predict(source)
         predicted_image = cv2.imread(file_path)
         st.image(predicted_image, channels="BGR")
 

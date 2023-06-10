@@ -23,7 +23,8 @@ def check_folders():
     paths = {
         'data_path' : 'data',
         'images_path' : 'data/images',
-        'videos_path' : 'data/videos'
+        'videos_path' : 'data/videos',
+        'information_path' : 'data/information'
         
     }
     # Check whether the specified path exists or not

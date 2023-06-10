@@ -1,6 +1,7 @@
 # App for object detection
 from utils import get_detection_folder, check_folders
 import redirect as rd
+import base64
 
 from pathlib import Path
 import streamlit as st
@@ -9,6 +10,17 @@ import subprocess
 import os
 import re
 import pandas as pd
+import zipfile
+
+
+
+def get_download_link(file_path, text):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    b64_data = base64.b64encode(data).decode()
+    href = f'<a href="data:application/octet-stream;base64,{b64_data}" download="{os.path.basename(file_path)}">{text}</a>'
+    return href
+
 
 full_labels = [
     'Автовесы (горка из пдд)',
@@ -30,73 +42,115 @@ Image.MAX_IMAGE_PIXELS = None
 # This will check if we have all the folders to save our files for inference
 check_folders()
 
-def app():   
+def app():
     st.title('Детекция объектов')
+    download_links = []
 
     source = ("Изображение", "Видеозапись")
-    source_index = st.sidebar.selectbox("Выбор типа файла", range(
-        len(source)), format_func=lambda x: source[x])
-    
-    
-    
+    source_index = st.sidebar.selectbox("Выбор типа файла", range(len(source)), format_func=lambda x: source[x])
+
     if source_index == 0:
-        uploaded_file = st.sidebar.file_uploader(
-            "Загрузка фотографии", type=['png', 'jpeg', 'jpg'])
+        uploaded_files = st.sidebar.file_uploader("Загрузка фотографий", type=['png', 'jpeg', 'jpg'], accept_multiple_files=True)
         name = st.sidebar.text_input("Название полигона: ")
         region = st.sidebar.text_input("Регион: ")
         address = st.sidebar.text_input("Фактический адрес: ")
         lon = st.sidebar.text_input("Долгота: ")
         lat = st.sidebar.text_input("Широта: ")
-        if uploaded_file is not None:
-            is_valid = True
+
+        if uploaded_files is not None:
             with st.spinner(text='Обработка...'):
-                st.sidebar.image(uploaded_file)
-                picture = Image.open(uploaded_file)
-                picture.save(f'data/images/{uploaded_file.name}')
-                source = f'data/images/{uploaded_file.name}'
+                for uploaded_file in uploaded_files:
+                    st.sidebar.image(uploaded_file)
+                    picture = Image.open(uploaded_file)
+                    picture.save(f'data/images/{uploaded_file.name}')
+                    source = f'data/images/{uploaded_file.name}'
 
                 # Save information to a dataframe
-                df_info = pd.DataFrame({'Название полигона': [name], "Регион":[region], 'Фактический_адрес': [address], "Долгота":[lon], "Широта":[lat], 'Image': [uploaded_file.name]})
-                df_info.to_csv(f'data/information/{uploaded_file.name}.csv', index=False)
-
+                df_info = pd.DataFrame({'Название полигона': [name], "Регион": [region], 'Фактический_адрес': [address], "Долгота": [lon], "Широта": [lat]})
+                df_info.to_csv(f'data/information/{name}.csv', index=False)
         else:
-            is_valid = False
+            st.warning('Загрузите фотографии.')
+
     else:
         uploaded_file = st.sidebar.file_uploader("Загрузка видео", type=['mp4'])
         if uploaded_file is not None:
-            is_valid = True
             with st.spinner(text='Обработка...'):
                 st.sidebar.video(uploaded_file)
                 with open(os.path.join("data", "videos", uploaded_file.name), "wb") as f:
                     f.write(uploaded_file.getbuffer())
                 source = f'data/videos/{uploaded_file.name}'
         else:
-            is_valid = False
+            st.warning('Загрузите видео.')
 
-    if is_valid:
+    if uploaded_files:
         if st.button('Сделать предсказание'):
             with st.spinner('Подождите...'):
-                process = subprocess.run(['yolo', 'task=detect', 'mode=predict', 'model=models/best.pt', 'conf=0.01', 'source={}'.format(source)], capture_output=True, universal_newlines=True)
-                output = process.stderr
 
-                russian_labels = re.findall(r'\d+ ([а-яА-ЯёЁ\s]+)', output)
-                # Create dataframe with labels column
-                df = pd.DataFrame(full_labels, columns=['Объекты'])
+                # dfs = []
+                # Create a set to store unique labels across all images
+                # all_labels = set()
 
-                # Add a column to check if label exists in output labels
-                df['Наличие'] = df['Объекты'].apply(lambda label: "YES" if label in russian_labels else "NO")
+                for uploaded_file in uploaded_files:
+                    st.sidebar.image(uploaded_file)
+                    picture = Image.open(uploaded_file)
+                    picture.save(f'data/images/{uploaded_file.name}')
+                    source = f'data/images/{uploaded_file.name}'
 
-                st.dataframe(df)
+                    process = subprocess.run(['yolo', 'task=detect', 'mode=predict', 'model=models/last.pt', 'conf=0.15', 'source={}'.format(source)], capture_output=True, universal_newlines=True)
+                    output = process.stderr
 
-            if source_index == 0:
-                with st.spinner(text='Подготовка изображения.'):
-                    for img in os.listdir(get_detection_folder()):
-                        st.image(str(Path(f'{get_detection_folder()}') / img))
 
-                    st.balloons()
-            else:
-                with st.spinner(text='Подготовка видеозаписи.'):
-                    for vid in os.listdir(get_detection_folder()):
-                        st.video(str(Path(f'{get_detection_folder()}') / vid))
+                    # print(output)
+                    russian_labels = re.findall(r'\d+ ([а-яА-ЯёЁ\s]+)', output)
+                    # Create dataframe with labels column
+                    df = pd.DataFrame(russian_labels, columns=['Объекты'])
+                    # Add a column to check if label exists in output labels
+                    df['Наличие'] = df['Объекты'].apply(lambda label: "YES" if label in russian_labels else "NO")
 
-                    st.balloons()
+
+                    # df = pd.DataFrame(russian_labels, columns=['Объекты'])
+                    # df['Наличие'] = 'YES'  # Initialize 'Exists' column as 'YES'
+
+                    # # Update the 'Exists' column based on label existence
+                    # df.loc[~df['Объекты'].isin(all_labels), 'Наличие'] = 'NO'
+
+                    # # Update the set of all labels
+                    # all_labels.update(df['Объекты'].tolist())
+
+                    # # Append the dataframe to the list
+                    # dfs.append(df)
+                    
+                    st.dataframe(df)
+
+                    if source_index == 0:
+                        detection_folder = get_detection_folder()
+                        for img in os.listdir(detection_folder):
+                            if img.endswith('.jpg') or img.endswith('.jpeg') or img.endswith('.png'):
+                                image_path = os.path.join(detection_folder, img)
+                                st.image(image_path)
+
+                                download_link = get_download_link(image_path, f"Скачать фотографию для редактирования")
+                                st.markdown(download_link, unsafe_allow_html=True)
+                                download_links.append(image_path)
+
+                    else:
+                        for vid in os.listdir(get_detection_folder()):
+                            if vid.endswith('.mp4'):
+                                video_path = os.path.join(get_detection_folder(), vid)
+                                st.video(video_path)
+                
+                # concatenated_df = pd.concat(dfs, ignore_index=True)
+                # st.dataframe(concatenated_df)
+                st.balloons()
+
+            if len(download_links) > 0:
+                pathing = st.sidebar.text_input("Путь для скачивания всех картинок: ")
+                with st.expander("Скачать все"):
+                    all_zip_path = os.path.join(f'/{pathing}', "all_images.zip")
+
+                    with zipfile.ZipFile(all_zip_path, "w") as zipf:
+                        for file_path in download_links:
+                            zipf.write(file_path, os.path.basename(file_path))
+
+                download_link = get_download_link(all_zip_path, "Скачать все фото")
+                st.markdown(download_link, unsafe_allow_html=True)
