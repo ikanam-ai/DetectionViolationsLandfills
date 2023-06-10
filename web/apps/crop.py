@@ -29,16 +29,16 @@ def app():
         output_folder = os.path.join(output_path, f"output_{session_id}")
         os.makedirs(f'cropping_imgs/{output_folder}', exist_ok=True)
 
-        tile(photo, output_folder)
+        tile(photo, f'cropping_imgs/{output_folder}')
 
         st.write("Фото успешно разделено по частям!")
         st.write("Части фотографии:")
 
         for i in range(18):
-            split_folder = os.path.join(output_folder, f"split_{i+1}")
+            split_folder = os.path.join(f'cropping_imgs/{output_folder}', f"split_{i+1}")
             os.makedirs(split_folder, exist_ok=True)
 
-            split_photo_path = os.path.join(output_folder, f"output_{i}.jpg")
+            split_photo_path = os.path.join(f'cropping_imgs/{output_folder}', f"output_{i}.jpg")
             split_photo = Image.open(split_photo_path)
 
             split_output_path = os.path.join(split_folder, f"split_{i+1}.jpg")
