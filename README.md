@@ -8,4 +8,4 @@
 
 ### Пример распознования нарушений в прямом эфире:
 
-![](https://github.com/lct_2023/media/output_dronezam.gif)
+![](https://github.com/tothelimbo/lct_2023/blob/main/media/output_dronezam.gif)
