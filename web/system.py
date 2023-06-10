@@ -1,7 +1,7 @@
 # Main app which contains all parts of the system
 import streamlit as st
 from multiapp import MultiApp
-from apps import login, crop, yolo, label, drone, map # import your app modules here
+from apps import login, crop, yolo, label, drone, map, pano # import your app modules here
 
 app = MultiApp()
 
@@ -22,6 +22,9 @@ app.add_app('Карта', map.app)
 app.add_app("Детекция объектов", yolo.app)
 
 app.add_app('Разметка изображений', label.app)
+
+app.add_app('Просмотр панорамы', pano.app)
+
 
 # The main app
 app.run()
