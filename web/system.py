@@ -1,7 +1,7 @@
 # Main app which contains all parts of the system
 import streamlit as st
 from multiapp import MultiApp
-from apps import login, crop, yolo, label, drone # import your app modules here
+from apps import login, crop, yolo, label, drone, map # import your app modules here
 
 app = MultiApp()
 
@@ -15,6 +15,8 @@ app.add_app("Войти & Регистрация", login.app)
 app.add_app('Обрезка панорамной фотографии', crop.app)
 
 app.add_app('Подключение видеотрансляции с БПЛА', drone.app)
+
+app.add_app('Карта', map.app)
 
 # Only add the YOLO prediction app if the login is successful
 app.add_app("Детекция объектов", yolo.app)
