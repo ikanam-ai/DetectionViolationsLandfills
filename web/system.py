@@ -25,6 +25,5 @@ app.add_app('Разметка изображений', label.app)
 
 app.add_app('Просмотр панорамы', pano.app)
 
-
 # The main app
 app.run()

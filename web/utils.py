@@ -33,6 +33,6 @@ def check_folders():
         print(f'Директория {notExist} не существует, мы сделаем!')
         # Create a new directory because it does not exist
         for folder in notExist:
-            os.makedirs(folder)
+            os.makedirs(f'cropped_img/{folder}')
             print(f"Новая директория {folder} создана!")
         
