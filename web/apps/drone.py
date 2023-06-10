@@ -33,4 +33,4 @@ def app():
         play_video(rtmp_url)
 
 if __name__ == "__main__":
-    main()
+    app()
