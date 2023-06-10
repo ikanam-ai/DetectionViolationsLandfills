@@ -82,7 +82,7 @@ def apply_labels_to_image(file_name, mask_file_path):
 
 
 # Streamlit app
-def main():
+def app():
     st.title("Object Detection with Streamlit")
 
     # File uploader
@@ -104,4 +104,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    app()
