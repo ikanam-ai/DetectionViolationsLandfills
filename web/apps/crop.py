@@ -27,7 +27,7 @@ def app():
 
         session_id = str(uuid.uuid4())  # Generate a unique session ID
         output_folder = os.path.join(output_path, f"output_{session_id}")
-        os.makedirs(output_folder, exist_ok=True)
+        os.makedirs(f'cropping_imgs/{output_folder}', exist_ok=True)
 
         tile(photo, output_folder)
 
